@@ -1,0 +1,27 @@
+{
+  "name": "bac-checkboxes-tampermonkey",
+  "version": "1.0.0",
+  "description": "",
+  "main": "user.js",
+  "scripts": {
+    "build": "npx tsc"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/alonsovb/BAC-tampermonkey-checklists.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/alonsovb/BAC-tampermonkey-checklists/issues"
+  },
+  "homepage": "https://github.com/alonsovb/BAC-tampermonkey-checklists#readme",
+  "devDependencies": {
+    "typescript": "^5.9.3"
+  },
+  "dependencies": {
+    "@types/tampermonkey": "^5.0.5"
+  }
+}

@@ -9,12 +9,13 @@
 // @grant        GM_setValue
 // @grant        GM_deleteValue
 // ==/UserScript==
+//import 'tampermonkey'
 
 (function () {
   'use strict';
 
-  function enhanceRows(tbody) {
-    const rows = tbody.querySelectorAll('tr[statusdisplayrow="true"]');
+  function enhanceRows(tbody: HTMLTableSectionElement) {
+    const rows = tbody.querySelectorAll<HTMLTableRowElement>('tr[statusdisplayrow="true"]');
 
     rows.forEach((row) => {
       const allTds = row.querySelectorAll('td');
@@ -68,7 +69,7 @@
     const observer = new MutationObserver((_, obs) => {
       const tbodyIdsToEnhance = ['tbodycreditCardRecentMovementsTable', 'tbodycreditCardStateTRX', 'transactionTable', 'tbodytransactionTable1']
       tbodyIdsToEnhance.forEach((tbodyId) => {
-        const tbody = document.getElementById(tbodyId)
+        const tbody = document.getElementById(tbodyId) as HTMLTableSectionElement
         if (tbody) {
           enhanceRows(tbody);
         }
