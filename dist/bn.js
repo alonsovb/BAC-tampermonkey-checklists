@@ -1,22 +1,21 @@
 "use strict";
 // ==UserScript==
-// @name         Bank Transaction Row Checker (Smart Filter)
+// @name         Bank Transaction Row Checker for BN
 // @namespace    http://tampermonkey.net/
 // @version      1.2
 // @description  Adds checkboxes to bank transactions, ignoring summary or empty rows
-// @match        https://*.sucursalelectronica.com/*
-// @match        https://www1.sucursalelectronica.com/ebac/module/consolidatedQuery/consolidatedQuery.go
+// @match        https://bncr.bnonline.fi.cr/BNCR.InternetBanking.Web/CuentasSOA/MovimientosCuenta.aspx
 // @grant        GM_getValue
 // @grant        GM_setValue
 // @grant        GM_deleteValue
 // ==/UserScript==
 //import 'tampermonkey'
-Object.defineProperty(exports, "__esModule", { value: true });
 (function () {
     'use strict';
     function enhanceRows(tbody) {
-        const rows = tbody.querySelectorAll('tr[statusdisplayrow="true"]');
+        const rows = tbody.querySelectorAll('.gridEditItemStyle, .gridAlternatingItems');
         rows.forEach((row) => {
+            var _a, _b;
             const allTds = row.querySelectorAll('td');
             const firstTd = allTds[0];
             if (!firstTd)
@@ -29,9 +28,9 @@ Object.defineProperty(exports, "__esModule", { value: true });
             if (row.dataset.checkboxEnhanced)
                 return;
             row.dataset.checkboxEnhanced = 'true';
-            const dateRowText = allTds[1]?.textContent.trim();
-            const descRowText = allTds[2]?.textContent.trim();
-            const rowId = `bac:row:${location.pathname}:${dateRowText}:${descRowText}`;
+            const dateRowText = (_a = allTds[0]) === null || _a === void 0 ? void 0 : _a.textContent.trim();
+            const descRowText = (_b = allTds[4]) === null || _b === void 0 ? void 0 : _b.textContent.trim();
+            const rowId = `bn:row:${location.pathname}:${dateRowText}:${descRowText}`;
             const checkbox = document.createElement('input');
             checkbox.type = 'checkbox';
             checkbox.style.marginRight = '8px';
@@ -59,20 +58,11 @@ Object.defineProperty(exports, "__esModule", { value: true });
             firstTd.insertBefore(checkbox, firstTd.firstChild);
         });
     }
-    function waitForTable() {
-        const observer = new MutationObserver((_, obs) => {
-            const tbodyIdsToEnhance = ['tbodycreditCardRecentMovementsTable', 'tbodycreditCardStateTRX', 'transactionTable', 'tbodytransactionTable1'];
-            tbodyIdsToEnhance.forEach((tbodyId) => {
-                const tbody = document.getElementById(tbodyId);
-                if (tbody) {
-                    enhanceRows(tbody);
-                }
-            });
-        });
-        observer.observe(document.body, {
-            childList: true,
-            subtree: true
-        });
-    }
-    waitForTable();
+    const tbodyIdsToEnhance = ['BNCRMP_cphContenidoPagina_dtgMovimientos'];
+    tbodyIdsToEnhance.forEach((tbodyId) => {
+        const tbody = document.getElementById(tbodyId);
+        if (tbody) {
+            enhanceRows(tbody);
+        }
+    });
 })();
