@@ -6,14 +6,12 @@
 // @description  Adds checkboxes to bank transactions, ignoring summary or empty rows
 // @match        https://bncr.bnonline.fi.cr/BNCR.InternetBanking.Web/CuentasSOA/MovimientosCuenta.aspx
 // @grant        GM_xmlhttpRequest
-// @connect      192.168.1.100
+// @connect      192.168.1.100:8000
 // ==/UserScript==
 //import 'tampermonkey'
 (function () {
     'use strict';
-    // TODO: point this at your backend's actual LAN address/port, and update
-    // the @connect host above to match (Tampermonkey blocks GM_xmlhttpRequest
-    // to hosts not listed there).
+    // Filled in at build time from .env's API_BASE_URL (see scripts/inject-env.js).
     const API_BASE_URL = 'http://192.168.1.100:8000';
     // Row IDs currently checked, mirrored from the backend. Source of truth is
     // the backend; this is a local read cache so enhanceRows() can render
