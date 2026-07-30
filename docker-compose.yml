@@ -1,0 +1,13 @@
+services:
+  app:
+    build: .
+    ports:
+      - "8000:8000"
+    volumes:
+      - checklist-data:/data
+    environment:
+      - DB_PATH=/data/checklist.db
+    restart: unless-stopped
+
+volumes:
+  checklist-data:
